@@ -1,0 +1,18 @@
+apply plugin: 'groovy'
+apply plugin: 'eclipse'
+apply plugin: 'java'
+
+project.buildDir = 'target'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'commons-collections:commons-collections:3.2'
+    compile 'org.codehaus.groovy:groovy-all:2.1.5'
+    compile 'cglib:cglib-nodep:2.2.2'
+	
+	testCompile 'junit:junit:4.11'
+    testCompile 'org.spockframework:spock-core:0.7-groovy-2.0'
+}
