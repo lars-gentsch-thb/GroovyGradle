@@ -16,3 +16,14 @@ dependencies {
     testCompile 'junit:junit:4.11'
     testCompile 'org.spockframework:spock-core:0.7-groovy-2.0'
 }
+
+test {
+    maxParallelForks = 5
+    forkEvery = 50
+    include '**/Test*.*'
+}
+ 
+task integrationTest(type: Test, dependsOn: "test") << {
+   include '**/IntegrationTest*.*'
+}
+
