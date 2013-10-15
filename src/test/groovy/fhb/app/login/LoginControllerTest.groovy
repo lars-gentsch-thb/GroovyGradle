@@ -21,12 +21,8 @@ class LoginControllerTest extends Specification {
     static final String EMPTY_USERNAME = ''
     static final String EMPTY_PASSWORD = ''
 
-    LoginController controller = new LoginController()
-    LoginService service = Mock(LoginService)
-
-    void setup() {
-        controller.loginService = service
-    }
+    LoginService serviceMock = Mock(LoginService)
+    LoginController controller = new LoginController(loginService: serviceMock)
 
     void 'Login when user tries to login with valid credentials' () {
         given: loginServiceAllowsAccessFor VALID_USERNAME, VALID_PASSWORD
@@ -51,11 +47,11 @@ class LoginControllerTest extends Specification {
 
     // given
     private void loginServiceDeniesAccessFor(username, password) {
-        service.login(username, password) >> USER_NOT_AUTHENTICATED
+        serviceMock.login(username, password) >> USER_NOT_AUTHENTICATED
     }
 
     private void loginServiceAllowsAccessFor(username, password) {
-        service.login(username, password) >> USER_AUTHENTICATED
+        serviceMock.login(username, password) >> USER_AUTHENTICATED
     }
 
     // when
