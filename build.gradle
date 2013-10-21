@@ -1,8 +1,14 @@
 apply plugin: 'groovy'
 apply plugin: 'eclipse'
 apply plugin: 'java'
+apply plugin: 'jetty'
 
+group = 'fhb'
 project.buildDir = 'target'
+
+// Jetty settings
+project.stopPort = 8015
+project.stopKey = 'ESC'
 
 repositories {
     mavenCentral()
@@ -15,7 +21,8 @@ dependencies {
 	
     testCompile 'junit:junit:4.11'
     testCompile 'org.spockframework:spock-core:0.7-groovy-2.0'
-}
+    testCompile 'org.gebish:geb-spock:0.9.1'
+    }
 
 test {
     maxParallelForks = 5
@@ -24,6 +31,19 @@ test {
 }
  
 task integrationTest(type: Test, dependsOn: "test") << {
-   include '**/IntegrationTest*.*'
+    println 'Execute ITs'
+    include '**/IT*.*'
 }
 
+integrationTest.doFirst {
+    println 'Starting the embedded jetty server'
+    tasks.jettyRun.daemon=true
+    tasks.jettyRun.execute()
+}
+
+integrationTest.doLast {
+    println 'Stopping the embedded jetty server'
+    tasks.jettyStop.execute()
+}
+
+    
