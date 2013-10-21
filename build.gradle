@@ -22,7 +22,8 @@ dependencies {
     testCompile 'junit:junit:4.11'
     testCompile 'org.spockframework:spock-core:0.7-groovy-2.0'
     testCompile 'org.gebish:geb-spock:0.9.1'
-    }
+    testCompile 'org.seleniumhq.selenium:selenium-java:2.35.0'
+}
 
 test {
     maxParallelForks = 5
@@ -31,7 +32,6 @@ test {
 }
  
 task integrationTest(type: Test, dependsOn: "test") << {
-    println 'Execute ITs'
     include '**/IT*.*'
 }
 
