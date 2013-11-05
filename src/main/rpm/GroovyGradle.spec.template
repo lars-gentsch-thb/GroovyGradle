@@ -1,0 +1,50 @@
+%define app GroovyGradle
+%define version 1.0
+
+%define installdir /opt/tomcat/webapps
+%define _topdir %(echo $PWD)/build/rpm
+%define destination_war ROOT.war
+
+%define appversion %{app}-%{version}
+
+Name: %{app}
+Summary: FHB GroovyGradle example project
+URL: http://www.fh-brandenburg.de
+Vendor: Lars Gentsch
+Packager: Lars Gentsch
+BuildRoot: %{_topdir}/tmp
+Group: Session
+License: Closed
+Epoch: 1
+Version: %{version}
+BuildArch: noarch
+Release: @@@REVISION@@@
+Source0: %{app}.tar.gz
+Requires: tomcat
+
+%description
+FHB GroovyGradle example project. Build based on revision @@@REVISION@@@
+
+%prep
+%setup
+
+%install
+%{__rm} -rf %{buildroot}
+
+%{__mkdir_p} %{buildroot}%{installdir}
+%{__install} -m 644 %{appversion}.war $RPM_BUILD_ROOT%{installdir}/%{destination_war}
+
+%files
+%defattr(-,root,root)
+%{installdir}/%{destination_war}
+
+%clean
+%{__rm} -rf %{buildroot}
+
+%pre
+service tomcat stop
+
+%post
+chown tomcat %{installdir}
+rm -rf /opt/tomcat/work/*
+rm -rf %{installdir}/ROOT
