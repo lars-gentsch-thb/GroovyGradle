@@ -14,12 +14,20 @@ repositories {
     mavenCentral()
 }
 
+compileGroovy {
+  groovyOptions.metaClass.optionMap = { [indy: true, encoding: "UTF-8"] }
+}
+ 
+compileTestGroovy {
+  groovyOptions.metaClass.optionMap = { [indy: true, encoding: "UTF-8"] }
+}
+
 dependencies {
     def thymeleaf_version = '2.0.17'
     def spring_version = '3.2.1.RELEASE'
 
+    compile 'org.codehaus.groovy:groovy-all:2.2.+:indy'
     compile 'commons-collections:commons-collections:3.2'
-    compile 'org.codehaus.groovy:groovy-all:2.1.5'
     compile 'cglib:cglib-nodep:2.2.2'
     compile "org.springframework:spring-core:${spring_version}"
     compile "org.springframework:spring-beans:${spring_version}"
@@ -30,6 +38,7 @@ dependencies {
 
 	providedCompile "javax.servlet:javax.servlet-api:3.0.1"
 	
+    testCompile 'org.codehaus.groovy:groovy-all:2.2.+:indy'
     testCompile 'junit:junit:4.11'
     testCompile 'org.spockframework:spock-core:0.7-groovy-2.0'
     testCompile 'org.gebish:geb-spock:0.9.1'
