@@ -14,6 +14,10 @@ class LoginServiceTest extends Specification {
 
     LoginService service = new LoginService()
     def isAuthenticated
+	
+	def before() {
+		println 'RUNs'
+	}
 
     void 'Login user when username and passowrd are valid'() {
         when: userTriesToLogInWith VALID_USERNAME, VALID_PASSWORD

@@ -14,36 +14,28 @@ repositories {
     mavenCentral()
 }
 
-compileGroovy {
-  groovyOptions.metaClass.optionMap = { [indy: true, encoding: "UTF-8"] }
-}
- 
-compileTestGroovy {
-  groovyOptions.metaClass.optionMap = { [indy: true, encoding: "UTF-8"] }
-}
-
 dependencies {
-    def thymeleaf_version = '2.0.17'
-    def spring_version = '3.2.1.RELEASE'
+    def spring_version = '4.2.1.RELEASE'
+    def thymeleaf_version = '2.1.4.RELEASE'
 
-    compile 'org.codehaus.groovy:groovy-all:2.2.+:indy'
+    compile 'org.codehaus.groovy:groovy-all:2.4.4'
     compile 'commons-collections:commons-collections:3.2'
-    compile 'cglib:cglib-nodep:2.2.2'
+    compile 'cglib:cglib-nodep:3.1'
     compile "org.springframework:spring-core:${spring_version}"
     compile "org.springframework:spring-beans:${spring_version}"
     compile "org.springframework:spring-web:${spring_version}"
     compile "org.springframework:spring-webmvc:${spring_version}"
     compile "org.thymeleaf:thymeleaf:${thymeleaf_version}"
-    compile "org.thymeleaf:thymeleaf-spring3:${thymeleaf_version}"
+    compile "org.thymeleaf:thymeleaf-spring4:${thymeleaf_version}"
 
-	providedCompile "javax.servlet:javax.servlet-api:3.0.1"
-	
-    testCompile 'org.codehaus.groovy:groovy-all:2.2.+:indy'
-    testCompile 'junit:junit:4.11'
-    testCompile 'org.spockframework:spock-core:0.7-groovy-2.0'
-    testCompile 'org.gebish:geb-spock:0.9.1'
-    testCompile 'org.seleniumhq.selenium:selenium-java:2.35.0'
-	testCompile 'org.apache.httpcomponents:httpclient:4.3.1'
+    providedCompile "javax.servlet:javax.servlet-api:3.1.0"
+
+    testCompile 'junit:junit:4.12'
+    testRuntime "org.objenesis:objenesis:2.1"
+    testCompile 'org.spockframework:spock-core:1.0-groovy-2.4'
+    testCompile 'org.gebish:geb-spock:0.12.2'
+    testCompile 'org.seleniumhq.selenium:selenium-java:2.48.2'
+    testCompile 'org.apache.httpcomponents:httpclient:4.5.1'
 }
 
 test {
@@ -53,20 +45,21 @@ test {
 }
 
 check {
-    dependsOn = ['integrationTest']
+    dependsOn = ['integrationTests']
 }
 
-task integrationTest(type: Test, dependsOn: "test") << {
-	include '**/IT*.*'
+task integrationTests(type: Test) << {
+    include '**/*IT.*'
+    exclude '**/*Test.*'
 }
 
-integrationTest.doFirst {
+integrationTests.doFirst {
     println 'Starting the embedded jetty server'
     tasks.jettyRun.daemon=true
     tasks.jettyRun.execute()
 }
 
-integrationTest.doLast {
+integrationTests.doLast {
     println 'Stopping the embedded jetty server'
     tasks.jettyStop.execute()
 }  

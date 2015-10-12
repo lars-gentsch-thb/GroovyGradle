@@ -8,8 +8,8 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.thymeleaf.TemplateEngine
-import org.thymeleaf.spring3.SpringTemplateEngine
-import org.thymeleaf.spring3.view.ThymeleafViewResolver
+import org.thymeleaf.spring4.SpringTemplateEngine
+import org.thymeleaf.spring4.view.ThymeleafViewResolver
 import org.thymeleaf.templateresolver.ServletContextTemplateResolver
 import org.thymeleaf.templateresolver.TemplateResolver
 

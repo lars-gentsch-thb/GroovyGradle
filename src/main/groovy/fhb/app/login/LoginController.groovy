@@ -29,7 +29,7 @@ class LoginController {
         notNullOrEmpty('password', password)
 
         if(!loginService.login(username, password)) {
-            throw new UserNotAuthenticatedException()
+            throw new UserNotAuthenticatedException('Wrong Password')
         }
 		
     }

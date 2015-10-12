@@ -1,10 +1,10 @@
 package fhb.app.config
 
-import javax.servlet.Registration;
+import javax.servlet.Registration
 import javax.servlet.ServletContext
 import javax.servlet.ServletContextListener
 import javax.servlet.ServletException
-import javax.servlet.ServletRegistration;
+import javax.servlet.ServletRegistration
 
 import org.springframework.core.io.support.ResourcePropertySource
 import org.springframework.web.WebApplicationInitializer
@@ -15,9 +15,9 @@ import org.springframework.web.filter.CharacterEncodingFilter
 import org.springframework.web.servlet.DispatcherServlet
 
 class AppInitializer implements WebApplicationInitializer {
-
+    
     @Override
-    void onStartup(ServletContext servletContext) throws ServletException {
+    void onStartup(ServletContext servletContext) {
         configPropertySource(servletContext)
         AnnotationConfigWebApplicationContext rootContext = createSpringApplicationContext()
         rootContext.environment.propertySources.addFirst(propertySource(servletContext))
