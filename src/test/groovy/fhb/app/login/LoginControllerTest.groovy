@@ -29,14 +29,14 @@ class LoginControllerTest extends Specification {
         expect: userDoesLoginWith VALID_USERNAME, VALID_PASSWORD
     }
 
-
- //  void 'Expect exception when user tries to login with invalid credentials'() {
- //       given: loginServiceDeniesAccessFor INVALID_USERNAME, INVALID_PASSWORD
- //       when: userDoesLoginWith INVALID_USERNAME, INVALID_PASSWORD
- //       then: def exception = thrown(UserNotAuthenticatedException)
- //   }
+    void 'Expect exception when user tries to login with invalid credentials'() {
+        given: loginServiceDeniesAccessFor INVALID_USERNAME, INVALID_PASSWORD
+        when: userDoesLoginWith INVALID_USERNAME, INVALID_PASSWORD
+        then: def exception = thrown(UserNotAuthenticatedException)
+    }
 
     void 'Expect IllegalArgumentException when no credentials are given'() {
+        given: 'bla'
         when: userDoesLoginWith NO_USERNAME, NO_PASSWORD
         then: def exception = thrown(IllegalArgumentException)
     }
